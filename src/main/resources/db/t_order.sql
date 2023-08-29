@@ -10,7 +10,7 @@ create table IF NOT EXISTS t_order_20221124
     `create_time` datetime(3),
     PRIMARY KEY (`id_string`)
 );
-create table IF NOT EXISTS t_order_20221125
+create table IF NOT EXISTS `t_order_20221125`
 (
     `id_string`   varchar(50),
     `create_time` datetime(3),

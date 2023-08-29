@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
@@ -19,7 +20,7 @@ class GroupByShardingsphereTestApplicationTests {
 
     @Test
     void testLogicTableWithGroup() {
-        assertThrows(UncategorizedSQLException.class, () -> tOrderMapper.findByLogicTable());
+        assertDoesNotThrow(() -> tOrderMapper.findByLogicTable());
         tOrderMapper.findGroupByLogicTable();
     }
 
@@ -32,10 +33,11 @@ class GroupByShardingsphereTestApplicationTests {
         assertThat(tOrderMapper.findByLogicTable()).isEqualTo(tOrderPOS);
     }
 
+    /**
+     * Obviously, masking real tables that have been configured is reasonable behavior
+     */
     @Test
     void testActualTable() {
-        assertThat(tOrderMapper.findByActualTable())
-                .isEqualTo(List.of(new TOrderPO("114516", LocalDateTime.of(2022, 11, 25, 0, 0, 0))));
+        assertThrows(UncategorizedSQLException.class, () -> tOrderMapper.findByActualTable());
     }
-
 }
